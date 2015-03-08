@@ -1,0 +1,5 @@
+#!/bin/sh
+while true; do
+	xclip -o | xclip -selection clipboard 2 >/dev/null
+	sleep 0.5
+done;

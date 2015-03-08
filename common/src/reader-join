@@ -1,0 +1,53 @@
+#!/bin/sh
+set -e
+#set -x
+
+reader_next () {
+	while [ -n "$(ps -p $1 -o state | sed 1d)" ] &&
+	  [ ! "T" = "$(ps -p $1 -o state | sed 1d)" ];do
+	 sleep 0.01
+	done
+	[ -n "$(ps -p $1 -o state | sed 1d )" ] ||
+	  return 1
+	kill -s CONT "$1"
+	cat $out
+}
+
+next1 () {
+  line1="$(reader_next $r1)" || { line1=; return 0; }
+	key1="$(echo "$line1" | cut -f1)"
+	val1="$(echo "$line1" | cut -f2-)"
+}
+next2 () {
+  line2="$(reader_next $r2)" || { line2=; return 0; }
+	key2="$(echo "$line2" | cut -f1)"
+	val2="$(echo "$line2" | cut -f2-)"
+}
+
+out=$(mkpipe)
+cat "$1" | readline $out & r1=$!
+cat "$2" | readline $out & r2=$!
+
+next1
+next2
+while [ -n "$line1" ] && [ -n "$line2" ]; do
+	if [ "$key1" "=" "$key2" ]; then
+		echo "$key1	$val1	$val2"
+	  next1; next2;
+	elif [ "$key1" "<" "$key2" ]; then
+		echo "$key1	$val1	-"
+	  next1
+	elif [ "$key1" ">" "$key2" ]; then
+		echo "$key2	-	$val2"
+	  next2
+  fi
+done;
+
+while [ -n "$line2" ];do 
+	echo "$key2	-	$val2"
+	next2
+done;
+while [ -n "$line1" ];do 
+	echo "$key1	$val1	-"
+	next1
+done;

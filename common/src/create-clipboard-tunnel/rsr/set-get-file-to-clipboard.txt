@@ -1,0 +1,42 @@
+ How to copy files through a remote desktop connection using clipboard and PowerShell
+Filed under: PowerShell — Tags: PowerShell — Peter Holpar @ 21:22
+
+Recently I’m working on a remote system that I should access through a remote desktop connection. The local file system cannot be shared neither through the RDP client nor using direct UNC paths.
+
+Since both the local and remote computer have Internet connection, first I tried to transfer files through the web, created a mail draft at the local machine using Outlook Web Access, added the files as attachments, saved it, and accessed the draft mail from the remote system. It was rather cumbersome, especially since OWA blocked some of the files due to their extension, so I had to apply additional tricks, like renaming files.
+
+Fortunately, I remembered that a few months ago I read a blog post from Mikael Svenson where he described how he copied files from remote to local machine in a similar situation via converting binary files to text files using Base64 encoding on the remote system and copying the text content manually via the clipboard to the local system, where he saved it as a text file and finally converted back the text to binary content. In his case both systems had Visual Studio installed so he created simple custom application using C# to do the job.
+
+In my case the remote server has no VS installed, and although I could have created a custom application on my local machine and uploaded it through OWA, I preferred to create a more flexible solution using PowerShell. Since I did not like the idea to create text files manually as part of the file transfer, I decided to use only the clipboard to manipulate the content. You can read more about accessing clipboard from PowerShell here.
+
+I used the following methods to achieve my goal:
+
+function Get-FileContent($filePath) 
+{ 
+     $command = 
+     { 
+         Add-Type -an System
+         Add-Type -an System.Windows.Forms 
+         $filePathArg = $Args[0]
+         $content = [System.IO.File]::ReadAllBytes($filePathArg)
+         $encoded = [System.Convert]::ToBase64String($content)
+         [System.Windows.Forms.Clipboard]::SetText($encoded)
+     } 
+     powershell -sta -noprofile -args $filePath -command $command
+}
+
+function Set-FileContent($filePath) 
+{ 
+     $command = 
+     { 
+         Add-Type -an System
+         Add-Type -an System.Windows.Forms 
+         $filePathArg = $Args[0]
+         $encoded = [System.Windows.Forms.Clipboard]::GetText()
+         $content = [System.Convert]::FromBase64String($encoded)
+         [System.IO.File]::WriteAllBytes($filePathArg, $content)
+     } 
+     powershell -sta -noprofile -args $filePath -command $command
+}
+
+You can run Get-FileContent specifying the local path of the file and it places the Base64 encoded binary file content as text onto the shared clipboard. On the remote system, the Set-FileContent method decodes the text content from the shared clipboard and writes the output into the file path you specified. You can use the methods in the opposite order if you need to copy from remote to local machine.

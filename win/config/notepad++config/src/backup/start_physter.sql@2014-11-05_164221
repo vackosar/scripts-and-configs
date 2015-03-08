@@ -1,0 +1,112 @@
+
+
+
+set autotrace on explain
+select count(distinct this_.ID_REF_OBSTAVKOVA_SLOZKA) as y0_
+  from &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SLOZKA this_
+ inner join &&NAZEV_SCHEMATU..EXK_OBSTAVKOVA_SLOZKA exkobstavk1_
+    on this_.ID_REF_OBSTAVKOVA_SLOZKA =
+       exkobstavk1_.ID_REF_OBSTAVKOVA_SLOZKA
+   and (exkobstavk1_.datum_do IS NULL)
+ inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SL_APR refapros2_
+    on this_.ID_REF_OBSTAVKOVA_SLOZKA = refapros2_.ID_REF_OBSTAVKOVA_SLOZKA
+  left outer join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SL_TR reftros3_
+    on refapros2_.ID_REF_OBSTAVKOVA_SL_APR =
+       reftros3_.ID_REF_OBSTAVKOVA_SL_APR
+  left outer join &&NAZEV_SCHEMATU..EXK_OBSTAVKOVA_SL_TR tros4_
+    on reftros3_.ID_REF_OBSTAVKOVA_SL_TR = tros4_.ID_REF_OBSTAVKOVA_SL_TR
+   and (tros4_.datum_do IS NULL)
+ where exkobstavk1_.STAV_OS = 2
+   and this_.UKONCENA = 0
+   and this_.CLASS_TYPE in (3, 2)
+   and (this_.CLASS_TYPE = 3 or
+       (this_.CLASS_TYPE = 2 and tros4_.UZAVRENA = 0))
+   and (this_.ID_REF_OBSTAVKOVA_SLOZKA in
+       ( /* criteria query */
+         select distinct this_.ID_REF_OBSTAVKOVA_SLOZKA as y0_
+           from &&NAZEV_SCHEMATU..EXK_DAVKA this_
+          where ((this_.NAROK_OD <= to_date('2014-11-04','yyyy-mm-dd') and
+                (this_.NAROK_DO is null or this_.NAROK_DO >= to_date('2014-11-04','yyyy-mm-dd'))) and
+                (this_.SPLATNOST >= 2 and this_.SPLATNOST <= 24))) or
+       this_.ID_REF_OBSTAVKOVA_SLOZKA in
+       ( /* criteria query */
+         select distinct ROS_.ID_REF_OBSTAVKOVA_SLOZKA as y0_
+           from &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SLOZKA ROS_
+          inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SL_APR rosa1_
+             on ROS_.ID_REF_OBSTAVKOVA_SLOZKA =
+                rosa1_.ID_REF_OBSTAVKOVA_SLOZKA
+          inner join &&NAZEV_SCHEMATU..EXK_SIROTEK sir2_
+             on rosa1_.ID_REF_OBSTAVKOVA_SL_APR =
+                sir2_.ID_REF_OBSTAVKOVA_SL_APR
+          inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SLOZKA siros3_
+             on sir2_.SIROTCI_OS = siros3_.ID_REF_OBSTAVKOVA_SLOZKA
+          inner join &&NAZEV_SCHEMATU..EXK_DAVKA sida4_
+             on siros3_.ID_REF_OBSTAVKOVA_SLOZKA =
+                sida4_.ID_REF_OBSTAVKOVA_SLOZKA
+          where ((sida4_.NAROK_OD <= to_date('2014-11-04','yyyy-mm-dd') and
+                (sida4_.NAROK_DO is null or sida4_.NAROK_DO >= to_date('2014-11-04','yyyy-mm-dd'))) and
+                (sida4_.SPLATNOST >= 2 and sida4_.SPLATNOST <= 24))))
+   and ((this_.ID_REF_OBSTAVKOVA_SLOZKA in
+       ( /* criteria query */
+          select ros3_.ID_REF_OBSTAVKOVA_SLOZKA as y0_
+            from &&NAZEV_SCHEMATU..EXK_PRIKAZ_VYP PV_
+           inner join &&NAZEV_SCHEMATU..EXK_PODKLAD_VYPLATY p4_
+              on PV_.ID_PODKLAD_VYPLATY = p4_.ID_PODKLAD_VYPLATY
+           inner join &&NAZEV_SCHEMATU..EXK_SADA_PODKLADU sp1_
+              on PV_.ID_SADA_PODKLADU = sp1_.ID_SADA_PODKLADU
+           inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SL_APR rosa2_
+              on sp1_.ID_REF_OBSTAVKOVA_SL_APR =
+                 rosa2_.ID_REF_OBSTAVKOVA_SL_APR
+           inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SLOZKA ros3_
+              on rosa2_.ID_REF_OBSTAVKOVA_SLOZKA =
+                 ros3_.ID_REF_OBSTAVKOVA_SLOZKA
+           where PV_.TYP_PRIKAZU_VYP in (4, 10, 14, 9, 5, 12, 11, 8, 13, 1, 15)
+             and p4_.STAV_VYST_DOKUMENTU in (6, 14, 13, 15, 17, 16)
+             and PV_.ZMENA_OD >= to_date('2014-12-01','yyyy-mm-dd')) or
+       this_.ID_REF_OBSTAVKOVA_SLOZKA in
+       ( /* criteria query */
+          select ros3_.ID_REF_OBSTAVKOVA_SLOZKA as y0_
+            from &&NAZEV_SCHEMATU..EXK_PRIKAZ_VYP PV_
+           inner join &&NAZEV_SCHEMATU..EXK_PODKLAD_VYPLATY p4_
+              on PV_.ID_PODKLAD_VYPLATY = p4_.ID_PODKLAD_VYPLATY
+           inner join &&NAZEV_SCHEMATU..EXK_SADA_PODKLADU sp1_
+              on PV_.ID_SADA_PODKLADU = sp1_.ID_SADA_PODKLADU
+           inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SL_APR rosa2_
+              on sp1_.ID_REF_OBSTAVKOVA_SL_APR =
+                 rosa2_.ID_REF_OBSTAVKOVA_SL_APR
+           inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SLOZKA ros3_
+              on rosa2_.ID_REF_OBSTAVKOVA_SLOZKA =
+                 ros3_.ID_REF_OBSTAVKOVA_SLOZKA
+           where PV_.TYP_PRIKAZU_VYP in (2, 6)
+             and p4_.STAV_VYST_DOKUMENTU in (6, 14, 13, 15, 17, 16)
+             and PV_.ZMENA_OD >= to_date('2014-12-01','yyyy-mm-dd'))) or
+       this_.ID_REF_OBSTAVKOVA_SLOZKA in
+       ( /* criteria query */
+         select ros3_.ID_REF_OBSTAVKOVA_SLOZKA as y0_
+           from &&NAZEV_SCHEMATU..EXK_PRIKAZ_VYP PV_
+          inner join &&NAZEV_SCHEMATU..EXK_PODKLAD_VYPLATY p4_
+             on PV_.ID_PODKLAD_VYPLATY = p4_.ID_PODKLAD_VYPLATY
+          inner join &&NAZEV_SCHEMATU..EXK_SADA_PODKLADU sp1_
+             on PV_.ID_SADA_PODKLADU = sp1_.ID_SADA_PODKLADU
+          inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SL_APR rosa2_
+             on sp1_.ID_REF_OBSTAVKOVA_SL_APR =
+                rosa2_.ID_REF_OBSTAVKOVA_SL_APR
+          inner join &&NAZEV_SCHEMATU..EXK_REF_OBSTAVKOVA_SLOZKA ros3_
+             on rosa2_.ID_REF_OBSTAVKOVA_SLOZKA =
+                ros3_.ID_REF_OBSTAVKOVA_SLOZKA
+          where PV_.TYP_PRIKAZU_VYP in (2, 6)
+            and p4_.STAV_VYST_DOKUMENTU in (6, 14, 13, 15, 17, 16)
+            and PV_.ZMENA_OD < to_date('2014-12-01','yyyy-mm-dd')
+            and not exists
+          ( /* criteria query */
+                 select PV2_.ID_PRIKAZ_VYP as y0_
+                   from &&NAZEV_SCHEMATU..EXK_PRIKAZ_VYP PV2_
+                  inner join &&NAZEV_SCHEMATU..EXK_PODKLAD_VYPLATY p2x1_
+                     on PV2_.ID_PODKLAD_VYPLATY = p2x1_.ID_PODKLAD_VYPLATY
+                  where PV_.ID_DAVKY_SRAZKY = PV2_.ID_DAVKY_SRAZKY
+                    and PV2_.TYP_PRIKAZU_VYP in (3, 7)
+                    and p2x1_.STAV_VYST_DOKUMENTU in (6, 14, 13, 15, 17, 16)
+                    and PV2_.ZMENA_OD <= to_date('2014-12-01','yyyy-mm-dd'))));
+		    
+
+

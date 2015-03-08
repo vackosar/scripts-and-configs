@@ -1,0 +1,58 @@
+#!/bin/sh
+set -e
+#set -x
+
+cd "$(dirname "$0")"
+encPath="../rsr/pw/pw.gpg"
+
+cleanUp () {
+	rm "$path" 2>/dev/null \
+		&& echo "clearing" \
+		|| echo "cleared"
+}
+getNames () {
+	grep "$1" "$path" | cut -d'	' -f1
+}
+
+timeout=15
+file="tmp.$(head --bytes 10 /dev/urandom | base64 | tr '/' '-' | tr -d '=')"
+path="/dev/shm/$file"
+touch "$path"
+chmod og-rwx "$path"
+
+getopts "le" option \
+  || true
+
+if [ "$OPTIND" = "1" ]; then
+	gpg -d "$encPath" | grep "$1" 2>/dev/null 1> "$path" \
+	  || true
+	count="`getNames "$1" | wc --lines`" 
+	if [ "$count" = "0" ]; then 
+		echo "Not found";
+		exit 1;
+	fi
+	echo "Found:"
+	getNames "$1" 
+	if test "$count" -ge "2"; then
+		echo "Found more that one.";
+		exit 1;
+	fi
+	grep "$1" "$path" | cut -d'	' -f2  | tr -d '\n' | clip
+	cleanUp
+	echo "Retrieved. Now; `date`. Cleared in: $timeout seconds."
+	(
+		trap 'echo -n | clip;' EXIT HUP INT QUIT TERM
+		sleep $timeout
+	) &
+elif [ "$option" = 'l' ]; then
+	gpg -d "$encPath" 2> /dev/null | 
+	  cut -d '	' -f 1
+elif [ "$option" = 'e' ]; then
+	gpg -d "$encPath" 2>/dev/null 1> "$path"
+	vi "$path"
+	echo "Rewritting old list."
+	gpg -o "$encPath" -c "$path" 
+else
+	echo "Invalid option $option" 1>&2 
+	exit 1
+fi

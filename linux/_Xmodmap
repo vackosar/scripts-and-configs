@@ -1,0 +1,134 @@
+keycode 49 = grave asciitilde Escape
+keycode  10 = 1 exclam F1 onesuperior
+keycode  11 = 2 at F2 twosuperior
+keycode  12 = 3 numbersign F3 threesuperior
+keycode  13 = 4 dollar F4 foursuperior
+keycode  14 = 5 percent F5 onehalf
+keycode  15 = 6 asciicircum F6 threequarters
+keycode  16 = 7 ampersand F7 seveneighths
+keycode  17 = 8 asterisk F8 trademark
+!keycode  18 = 9 bracketleft F9 trademark
+!keycode  19 = 0 bracketright F10 trademark
+keycode  20 = minus underscore F11 plusminus
+keycode  21 = equal plus F12 
+keycode  22 = BackSpace BackSpace Delete
+
+
+keycode 61 = slash question questiondown
+
+! use caps lock as additional modifier
+!clear mod4
+
+clear Lock
+clear shift
+clear control
+clear mod1
+clear mod4
+
+!remove mod4 = Super_L
+!remove mod4 = Super_R
+!remove control = Control_L
+!remove control = Control_R
+!remove mod1 = Alt_L
+!remove mod1 = Alt_R 
+!remove shift = Shift_R
+
+keycode 37 = Super_L
+keycode 64 = Control_L
+keycode 133 = Alt_L
+keycode 108 = Shift_R
+keycode 135 = Shift_R
+keycode 105 = Shift_R
+
+keycode 66 = Escape
+
+!keysym Menu =Shift_R 
+!keysym Control_R =Shift_R 
+!keysym Alt_R = Shift_R 
+!keysym Control_R =Super_L 
+!keysym Caps_Lock = Escape 
+
+!keysym Control_L = Mode_switch
+!keycode 134 =Control_L
+!keycode 133 = Alt_L Meta_l
+
+add control = Control_L
+add control = Control_R
+add mod1 = Alt_L
+!add mod1 = Menu 
+add mod4 =Super_L
+add shift =Shift_R
+add shift = Shift_L
+!add shift = Shift_L
+!add shift =Alt_R 
+!add shift =Control_R
+
+!remove shift = Shift_L
+!keysym Menu = Shift_L
+!add shift = Shift_L
+
+
+
+! keycode 66  = Mode_switch 
+!keycode 133  = Mode_switch
+!keycode 134  = Mode_switch
+
+! application shortcuts
+!keycode 54 = c C Escape
+!keycode 58 = m M Return
+! keycode 40 = d D Delete
+!keycode 41 = f F BackSpace
+!keycode 42 = g G Pointer_Button1
+
+! navigation shortcuts
+!keycode 31 = i I Prior 
+!keycode 32 = o O Home 
+!keycode 33 = p P Up 
+!keycode 34 = parenleft braceleft End 
+!keycode 35 = parenright braceright
+!keycode 45 = k K Next 
+!keycode 46 = l L Left 
+!keycode 47 = semicolon colon Down 
+!keycode 48 = apostrophe quotedbl Right 
+
+keycode 87 = Down
+keycode 88 = Up
+
+
+!keycode 43 = h H Delete Delete
+!keycode 40 = j J Enter Enter
+!keycode 41 = f F Right Right
+!keycode 56 = b B Left Left
+!keycode 52 = n N Down
+!keycode 33 = p P Up Up
+
+
+keycode 51 = backslash bar Delete
+
+
+
+
+!keycode 43 = h H Left 
+!keycode 44 = j J Down 
+!keycode 45 = k K Up
+!keycode 46 = l L Right 
+
+!keycode 38 = a A Left 
+!keycode 39 = s S Down
+!keycode 25 = w W Up
+!keycode 40 = d D Right 
+
+!keycode 24 = q Q Home 
+!keycode 26 = e E End 
+!keycode 27 = r R Prior 
+!keycode 41 = f F Next 
+
+!keycode 52 = z Z Return 
+!keycode 53 = x X BackSpace 
+!keycode 54 = c C Delete 
+
+
+
+
+
+

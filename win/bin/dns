@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+#set -x
+
+hosts="/cygdrive/c/Windows/System32/drivers/etc/hosts"
+#hosts="hosts"
+dns_flush () {
+	ipconfig /flushdns
+}
+dns_remove () {
+	sed -i "/$1/d" "$hosts"
+	dns_flush
+}
+dns_add () {
+	echo "127.0.0.1	$1" >> "$hosts"
+	dns_flush
+}
+dns_replace () {
+	dns_remove "$1"
+	dns_add "$1"
+}
+
+cmd="$1"
+shift
+dns_"$cmd" "$@"
+

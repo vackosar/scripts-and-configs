@@ -1,0 +1,3 @@
+#!/bin/sh
+file="$1"
+"/cygdrive/c/Program Files (x86)/VideoLAN/VLC/vlc.exe" --intf dummy --play-and-exit "$(cygpath.exe -w "$file")"

@@ -1,0 +1,31 @@
+#!/bin/sh
+#Makes sound every 6 minutes
+main () {
+	while
+		true
+	do
+		
+		checkTime
+		sleep 60
+	done
+}
+checkTime () {
+	local min; min="$(date +%M | sed 's/^0//')"
+#	if
+#		[ "$min" = 0 ]
+#	then 
+#		date +"%F" |tts
+#	fi
+	if
+		[ "$(($min % 5))" = 0 ]
+	then 
+		sayHourMinute
+	fi
+}
+sayHourMinute () {
+	date "+%H +%M" |tts
+}
+
+set -e -u
+set -x
+main "$@"

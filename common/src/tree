@@ -1,0 +1,23 @@
+#!/bin/sh
+#set -x
+fread () {
+  file="$next"
+  read next
+}
+
+if [ -z "$@" ]; then
+  tree .
+else
+  find "$@" -maxdepth 1 | 
+		sed -e '1d' -e 's;[^/]*/;;g' |
+			if fread; then
+				while fread; do
+					echo "├-$file"
+					tree "$@/$file" |
+						sed -e 's.^.│ .';
+				done;
+				echo "└-$file"
+				tree "$@/$file" |
+					sed -e 's.^.  .';
+			fi
+fi

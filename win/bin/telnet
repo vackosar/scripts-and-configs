@@ -1,0 +1,2 @@
+#!/bin/sh
+plink -telnet -v $1 -P $2

@@ -1,0 +1,8 @@
+#tomcat-7.0.42/webapps/ROOT/WEB-INF/classes/portal-ext.properties 
+  #
+    # Oracle
+    #
+jdbc.default.driverClassName=oracle.jdbc.driver.OracleDriver
+jdbc.default.url=jdbc:oracle:thin:@localhost:1521:xe
+jdbc.default.username=pwm
+jdbc.default.password=pwm

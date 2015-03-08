@@ -1,0 +1,3 @@
+Rolling Back a Container-Managed Transaction	EJBContext.setRollbackOnly() OR throw system exception
+Synchronizing a Session Bean’s Instance Variables	SessionSynchronization: .afterBegin(), .beforeCompletion(), .afterCompletion()
+Methods Not Allowed in Container-Managed Transactions	java.sql.Connection: .commit(), setAutoCommit(), .rollback(); javax.ejb.EJBContext: .getUserTransaction(); javax.transaction.UserTransaction.*()

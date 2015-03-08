@@ -1,0 +1,8 @@
+When to Use Enterprise Beans	scalablity, data integrity, users ... FIX THIS
+To develop an enterprise bean, you must provide the following files:	Enterprise bean class, Business interfaces, Helper classes
+Enterprise bean class:	Implements the business methods of the enterprise bean and any lifecycle callback methods.
+Business interfaces:	Define the business methods implemented by the enterprise bean class. A business interface is not required if the enterprise bean exposes a local, no-interface view.
+Helper classes:	Other classes needed by the enterprise bean class, such as exception and utility classes.
+Structure of an Enterprise Bean JAR:	{META-INF : { ejb-jar.xml, (app.server.xml), MANIFEST.MF }, (packages and classfiles) }
+Packaging Enterprise Beans in WAR Modules:	- (classfiles into WEB-INF/classes and xmls into WEB-INF/) or - (into EJB-JARs into WEB-INF/lib). These options are semantically equivallent. (JNDI clash!)
+Enterprise beans naming convetions:	ejbName: $nameBean, ejbClassName: $nameBean, ejbBussinessInterface: $name.

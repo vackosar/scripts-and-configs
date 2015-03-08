@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+set -x
+timeout="$1"
+if 
+	test -z "$timeout"
+then
+	timeout=5
+fi
+sleep $(($timeout*60))
+shutdown.exe /h

@@ -1,0 +1,14 @@
+#!/bin/sh
+find \
+	! \( -name 'bkp' -prune \) \
+	! \( -name 'tmp' -prune \) \
+	! \( -name 'tl' -prune  \) \
+	! \( -name 'src' -prune \) \
+	! \( -name 'rsr' -prune \) \
+	! \( -name 'cnc' -prune \) \
+	! \( -name 'fxd' -prune \) \
+	! \( -name 'in' -prune  \) \
+	! \( -name 'out' -prune \) \
+	-regex "^.*opn/[^/]*$" \
+| sed 's;/opn/; | ;g' |
+dline

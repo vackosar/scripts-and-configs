@@ -1,0 +1,88 @@
+<NotepadPlus>
+    <InternalCommands>
+        <Shortcut id="43003" Ctrl="yes" Alt="no" Shift="no" Key="82" />
+        <Shortcut id="41010" Ctrl="no" Alt="no" Shift="no" Key="0" />
+        <Shortcut id="42017" Ctrl="no" Alt="no" Shift="no" Key="0" />
+        <Shortcut id="42035" Ctrl="no" Alt="no" Shift="no" Key="0" />
+        <Shortcut id="43004" Ctrl="yes" Alt="no" Shift="no" Key="76" />
+        <Shortcut id="42013" Ctrl="no" Alt="no" Shift="no" Key="0" />
+        <Shortcut id="41001" Ctrl="yes" Alt="no" Shift="no" Key="84" />
+        <Shortcut id="42014" Ctrl="no" Alt="yes" Shift="no" Key="38" />
+        <Shortcut id="42015" Ctrl="no" Alt="yes" Shift="no" Key="40" />
+        <Shortcut id="43009" Ctrl="no" Alt="no" Shift="no" Key="0" />
+        <Shortcut id="43001" Ctrl="no" Alt="no" Shift="no" Key="0" />
+    </InternalCommands>
+    <Macros>
+        <Macro name="Trim Trailing and save" Ctrl="no" Alt="yes" Shift="yes" Key="83">
+            <Action type="2" message="0" wParam="42024" lParam="0" sParam="" />
+            <Action type="2" message="0" wParam="41006" lParam="0" sParam="" />
+        </Macro>
+    </Macros>
+    <UserDefinedCommands>
+        <Command name="Launch in Firefox" Ctrl="yes" Alt="yes" Shift="yes" Key="88">firefox &quot;$(FULL_CURRENT_PATH)&quot;</Command>
+        <Command name="Launch in IE" Ctrl="yes" Alt="yes" Shift="yes" Key="73">iexplore &quot;$(FULL_CURRENT_PATH)&quot;</Command>
+        <Command name="Launch in Chrome" Ctrl="yes" Alt="yes" Shift="yes" Key="82">chrome &quot;$(FULL_CURRENT_PATH)&quot;</Command>
+        <Command name="Launch in Safari" Ctrl="yes" Alt="yes" Shift="yes" Key="70">safari &quot;$(FULL_CURRENT_PATH)&quot;</Command>
+        <Command name="Get php help" Ctrl="no" Alt="yes" Shift="no" Key="112">http://www.php.net/%20$(CURRENT_WORD)</Command>
+        <Command name="Google Search" Ctrl="no" Alt="yes" Shift="no" Key="113">http://www.google.com/search?q=$(CURRENT_WORD)</Command>
+        <Command name="Wikipedia Search" Ctrl="no" Alt="yes" Shift="no" Key="114">http://en.wikipedia.org/wiki/Special:Search?search=$(CURRENT_WORD)</Command>
+        <Command name="Open file" Ctrl="no" Alt="yes" Shift="no" Key="116">$(NPP_DIRECTORY)\notepad++.exe $(CURRENT_WORD)</Command>
+        <Command name="Open in another instance" Ctrl="no" Alt="yes" Shift="no" Key="117">$(NPP_DIRECTORY)\notepad++.exe $(CURRENT_WORD) -nosession -multiInst</Command>
+        <Command name="Open containing folder" Ctrl="no" Alt="no" Shift="no" Key="0">explorer $(CURRENT_DIRECTORY)</Command>
+        <Command name="Open current dir cmd" Ctrl="no" Alt="no" Shift="no" Key="0">cmd /K cd /d $(CURRENT_DIRECTORY)</Command>
+        <Command name="Send via Outlook" Ctrl="yes" Alt="yes" Shift="yes" Key="79">outlook /a &quot;$(FULL_CURRENT_PATH)&quot;</Command>
+    </UserDefinedCommands>
+    <PluginCommands />
+    <ScintillaKeys>
+        <ScintKey ScintID="2300" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="40">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="78" />
+        </ScintKey>
+        <ScintKey ScintID="2302" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="38">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="80" />
+        </ScintKey>
+        <ScintKey ScintID="2453" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="36">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="65" />
+        </ScintKey>
+        <ScintKey ScintID="2451" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="35">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="69" />
+        </ScintKey>
+        <ScintKey ScintID="2013" menuCmdID="42007" Ctrl="yes" Alt="no" Shift="yes" Key="65" />
+        <ScintKey ScintID="2326" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="8">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="72" />
+        </ScintKey>
+        <ScintKey ScintID="2338" menuCmdID="0" Ctrl="yes" Alt="no" Shift="yes" Key="76">
+            <NextKey Ctrl="no" Alt="yes" Shift="no" Key="85" />
+        </ScintKey>
+        <ScintKey ScintID="2335" menuCmdID="0" Ctrl="yes" Alt="no" Shift="no" Key="8">
+            <NextKey Ctrl="no" Alt="yes" Shift="no" Key="8" />
+        </ScintKey>
+        <ScintKey ScintID="2336" menuCmdID="0" Ctrl="yes" Alt="no" Shift="no" Key="46">
+            <NextKey Ctrl="no" Alt="yes" Shift="no" Key="46" />
+        </ScintKey>
+        <ScintKey ScintID="2329" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="13">
+            <NextKey Ctrl="no" Alt="no" Shift="yes" Key="13" />
+        </ScintKey>
+        <ScintKey ScintID="2395" menuCmdID="0" Ctrl="yes" Alt="no" Shift="yes" Key="8">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="85" />
+        </ScintKey>
+        <ScintKey ScintID="2396" menuCmdID="0" Ctrl="yes" Alt="no" Shift="yes" Key="46">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="75" />
+        </ScintKey>
+        <ScintKey ScintID="2469" menuCmdID="42010" Ctrl="yes" Alt="no" Shift="no" Key="0" />
+        <ScintKey ScintID="2310" menuCmdID="0" Ctrl="yes" Alt="no" Shift="no" Key="39">
+            <NextKey Ctrl="no" Alt="yes" Shift="no" Key="70" />
+        </ScintKey>
+        <ScintKey ScintID="2308" menuCmdID="0" Ctrl="yes" Alt="no" Shift="no" Key="37">
+            <NextKey Ctrl="no" Alt="yes" Shift="no" Key="66" />
+        </ScintKey>
+        <ScintKey ScintID="2180" menuCmdID="42006" Ctrl="no" Alt="no" Shift="no" Key="46">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="68" />
+        </ScintKey>
+        <ScintKey ScintID="2304" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="37">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="66" />
+        </ScintKey>
+        <ScintKey ScintID="2306" menuCmdID="0" Ctrl="no" Alt="no" Shift="no" Key="39">
+            <NextKey Ctrl="yes" Alt="no" Shift="no" Key="70" />
+        </ScintKey>
+    </ScintillaKeys>
+</NotepadPlus>

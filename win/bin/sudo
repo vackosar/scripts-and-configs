@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+set -x 
+
+echo "does not work properly!"
+echo "Warning: This 'sudo' does not pipe stdin into it AND it evalueates the arguments."
+
+cygstart --action=runas "$@" 
+exit 0
+
+# unfinnished with working piping
+p="$(mkpipe)"
+cat - > "$p" &
+cygstart --action=runas cat "$p" \| "$@; read line"

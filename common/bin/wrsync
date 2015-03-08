@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+#set -x
+rsync -iau --no-p --delete "$@" |
+        sed '
+                s/^\*deleting  /-/
+                /^\.d/d
+                s/^c\(L.*\) ->.*/>\1/
+                s/^\(hf.*\) =>.*/\1/
+                s/^..+\{9\}/+/
+                s/^>[^ ]\{10\}/>/
+        '

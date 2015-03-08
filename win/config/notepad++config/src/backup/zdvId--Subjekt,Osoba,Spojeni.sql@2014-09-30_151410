@@ -1,0 +1,65 @@
+-- only first one per ZDV id is used.
+/*
+these are:
+
+100112085
+100112086
+100112089
+100112090
+100112091
+100112559
+100112574
+100112661
+100112788
+
+*/
+select distinct
+  ud.zdv_id_dv
+  , s.oid
+from 
+  exk_udaje_dokumentu ud,
+  EXK_EVIDENCE_VSTUP_DOK evd,
+  exk_evidence_dokumentu ed,
+  exk_vazba_dokument vd,
+  exk_ref_obstavkova_slozka os,
+  exk_subjekt s
+  
+where
+ud.id_evidence_vstup_dok = evd.id_evidence_vstup_dok
+and ed.id_evidence_dokumentu = evd.id_evidence_dokumentu
+and vd.id_evidence_dokumentu = ed.id_evidence_dokumentu
+and os.id_ref_obstavkova_slozka = vd.id_ref_obstavkova_slozka
+and s.id_subjekt = os.povinny
+and os.class_type = 2
+and ud.zdv_id_dv in (
+  '100112085',
+  '100112086',
+  '100112087',
+  '100112088',
+  '100112089',
+  '100112090',
+  '100112091',
+  '100112092',
+  '100112515',
+  '100112516',
+  '100112517',
+  '100112518',
+  '100112519',
+  '100112520',
+  '100112521',
+  '100112522',
+  '100112523',
+  '100112559',
+  '100112574',
+  '100112661',
+  '100112767',
+  '100112788',
+  '100112827',
+  '100112828',
+  '100112913',
+  '100112914',
+  '100112915',
+  '100112922'
+)
+order by ud.zdv_id_dv, s.oid
+;

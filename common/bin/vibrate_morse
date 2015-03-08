@@ -1,0 +1,137 @@
+#!/bin/sh
+# Transform numbers into impulse lengths separated by new line.
+
+set -u -e
+set -x
+
+LONG="100"
+SHORT="33"
+
+main () {
+	tr '[:lower:]' '[:upper:]' |
+		forAllChars encode |
+		forAll vibrate
+}
+encode () {
+	local char; char="$1"
+
+	local morse; morse="$(getMorse "$char")"
+	local inpulse; inpulse="$(getInpulse "$morse")"
+	echo "$inpulse"
+	echo ""
+}
+getInpulse () {
+	local morse; morse="$1"
+	
+	echo "$morse" |
+	sed "
+		s/-/$LONG\n/g
+		s/\./$SHORT\n/g
+	"
+}
+getMorse () {
+	local char; char="$1"
+	
+	echo "$TABLE" | 
+	grep "^$char" |
+	sed "s/.	\(.*\)/\1/"
+}
+forAll () {
+	while
+		read line
+	do
+		"$@" "$line"
+	done
+}
+forAllChars () {
+	while
+		read line
+	do
+		local length; length="$(expr length "$line")"
+		seq "$length" |
+		while
+			read position
+		do
+			local char; char="$(expr substr "$line" "$position" "1" || true)"
+			"$@" "$char"
+		done
+	done
+}
+vibrate () {
+	local impulse; impulse="$1"
+
+	local device; device="/sys/devices/virtual/timed_output/vibrator/enable"
+	if
+		[ -z "$impulse" ]
+	then
+		msleep "$((7*$SHORT))"
+	else
+		echo "$impulse" #>"$device"
+		msleep "$impulse"
+		msleep "$SHORT"
+	fi
+}
+msleep () {
+	local ms; ms="$1"
+
+	usleep "$(($ms*1000))"
+}
+table="
+A	.-
+B	-...
+C	-.-.
+D	-..
+E	.
+F	..-.
+G	--.
+H	....
+I	..
+J	.---
+K	-.-
+L	.-..
+M	--
+N	-.
+O	---
+P	.--.
+Q	--.-
+R	.-.
+S	...
+T	-
+U	..-
+V	...-
+W	.--
+X	-..-
+Y	-.--
+Z	--..
+Ä	.-.-
+Á	.--.-
+Å	.--.-
+Ch	----
+É	..-..
+Ñ	--.--
+Ö	---.
+Ü	..--
+0	-----
+1	.----
+2	..---
+3	...--
+4	....-
+5	.....
+6	-....
+7	--...
+8	---..
+9	----.
+.	.-.-.-
+,	--..--
+:	---...
+?	..--..
+'	.----.
+-	-....-
+/	-..-.
+(	-.--.-
+)	-.--.-
+\"	.-..-.
+@	.--.-.
+=	-...-
+"
+main "$@"

@@ -1,0 +1,139 @@
+#!/bin/sh
+set -e
+#set -x 
+. loglib.sh
+timestamp () {
+	date -u "+%F--%H-%M-%S-UTC"
+}
+poshla_diff () {
+	rdiff --exclude-from="$PWD/_rsyncignore" "$PWD/" "$repo/HEAD"
+}
+logChange () {
+	version="$1"
+	if
+		test -f "$PWD/change.log"
+	then
+		mv change.log change.log.bkp
+		{
+			echo "- files diff"
+			echo "$version" 
+		} > change.log
+		cat change.log.bkp \
+			>> change.log
+		rm change.log.bkp
+	fi
+}
+readUntil () {
+	regex="$1"
+	while 
+		read -r line
+	do
+		echo "$line"
+		if
+			echo "$line" |
+			grep -q "$regex" \
+			1>/dev/null 2>/dev/null
+		then
+			return 0
+		fi
+	done
+	err "function readUntil: regex=\"$regex\"not found."
+	return 1
+}
+poshla_logUpdate () {
+	cat change.log |
+	{
+		readUntil "^- files diff"
+		poshla_diff | 
+		sed 's/\(.*\)/	- \1/'
+		readUntil "^[^	-]" | tail -n1
+		cat -
+	} > change.log.bkp
+	mv change.log.bkp change.log
+}
+poshla_commit () {
+	new_version="$(timestamp)"
+	logChange "$new_version"
+	mv "$repo/HEAD" "$repo/$new_version"
+	wrsync --exclude-from="$PWD/_rsyncignore"  "$PWD/" "$repo/$new_version"
+	cp -al "$repo/$new_version" "$repo/HEAD"
+}
+poshla_update () {
+	wrsync $exclude "$repo/HEAD/" "$PWD"
+}
+poshla_head () {
+	if
+		test -h "$PWD/bkp"
+	then
+		repo="$(readlink -f "$PWD/bkp")"
+	else
+		repo="$PWD/bkp"
+	fi
+	if
+		! test -d "$repo"
+	then
+		err "Invalid repo=$repo."
+	fi
+	poshla_logUpdate
+}
+logInit () {
+	{
+		echo "- files diff"
+		echo "ROOT-$(timestamp)"
+	} > change.log
+}
+poshla_init () {
+	if [ "$#" = 0 ]; then
+		repo="$PWD/bkp"
+	elif [ "$#" = 1 ]; then
+		repoRoot="$1"
+		repo="$repoRoot/$(basename "$PWD")"
+	else
+		err "Invalid number of parameters."
+	fi
+	mkdir "$repo"
+	mkdir "$repo/HEAD"
+	if
+		! test "$repo" = "$PWD/bkp"
+	then
+		ln -s "$repo" "$PWD/bkp"
+	fi
+        {
+		echo "bkp"
+		echo "_rsyncignore"
+		echo "tmp"
+		echo "opn/*/*"
+		echo "cnc/*/*"
+		echo "fxd/*/*"
+		echo "change.log.bkp"
+        } \
+        > "$PWD/_rsyncignore"
+	
+	logInit
+}
+cmd="$1"
+shift
+if 
+	test "$cmd" = "update"
+then
+	poshla_head
+	poshla_update
+elif
+	test "$cmd" = "diff"
+then
+	poshla_head
+	poshla_diff
+elif 
+	test "$cmd" = "commit"
+then
+	poshla_head
+	poshla_commit
+elif 
+	test "$cmd" = "init"
+then
+	poshla_init "$@"
+elif
+	test "$cmd" = "logUpdate"
+then
+	poshla_head
+fi

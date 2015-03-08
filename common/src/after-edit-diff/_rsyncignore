@@ -1,0 +1,7 @@
+bkp
+_rsyncignore
+tmp
+opn/*/*
+cnc/*/*
+fxd/*/*
+change.log.bkp

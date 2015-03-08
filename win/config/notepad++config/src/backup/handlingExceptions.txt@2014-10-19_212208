@@ -1,0 +1,6 @@
+systemException indicates:	problem with the services that support an application.
+systemException definition:	any subclass of RuntimeException.
+sytemException fraweworks throw:	subclass of javax.ejb.EJBException.
+application exceptions definition:	is not subclass of RuntimeException.
+systemException within transaction:	causes rollback
+applicationException within transaction:	Does NOT cause rollback. Is rethrown.

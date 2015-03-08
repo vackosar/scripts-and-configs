@@ -1,0 +1,24 @@
+#!/bin/sh
+. loglib.sh
+. args.sh
+set -e
+#set -x
+
+if
+        test "$#" -lt 2
+then
+        err "Invalid number of parameters=$#."
+fi
+
+wrsync -n "$@"
+
+{
+	echo "wrsync -n"
+	echo "$#"
+	echo "$(($#-1))"
+} |
+	swapArgs "$@" |
+	sed '
+		/^[+-]/d
+		s/^>/</
+	'

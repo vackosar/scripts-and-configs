@@ -1,0 +1,4 @@
+#!/bin/sh
+file="/tmp/tmp.$(rndfn)"
+mkfifo -m600 "$file"
+echo "$file"
