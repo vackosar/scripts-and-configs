@@ -6,12 +6,18 @@ cd "$(dirname "$0")"
 encPath="../rsr/pw/pw.gpg"
 
 cleanUp () {
-	rm "$path" 2>/dev/null \
-		&& echo "clearing" \
-		|| echo "cleared"
+	echo "Cleanining up.";
+	{ 
+		shred "$path";
+		rm "$path"; 
+	} || { echo "Nothing to clean up!";  exit 0; }
 }
 getNames () {
 	grep "$1" "$path" | cut -d'	' -f1
+}
+backup () {
+	echo "Backing up.";
+	cp "$encPath" "$encPath.bkp";
 }
 
 timeout=15
@@ -23,6 +29,7 @@ chmod og-rwx "$path"
 getopts "le" option \
   || true
 
+trap 'cleanUp;' EXIT HUP INT QUIT TERM;
 if [ "$OPTIND" = "1" ]; then
 	gpg -d "$encPath" | grep "$1" 2>/dev/null 1> "$path" \
 	  || true
@@ -48,11 +55,14 @@ elif [ "$option" = 'l' ]; then
 	gpg -d "$encPath" 2> /dev/null | 
 	  cut -d '	' -f 1
 elif [ "$option" = 'e' ]; then
+	backup;
 	gpg -d "$encPath" 2>/dev/null 1> "$path"
 	vi "$path"
 	echo "Rewritting old list."
-	gpg -o "$encPath" -c "$path" 
+	gpg -o "$encPath" -c "$path"
+	cleanUp
 else
 	echo "Invalid option $option" 1>&2 
 	exit 1
 fi
+trap 'echo "Done.";' EXIT HUP INT QUIT TERM;
