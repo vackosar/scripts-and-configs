@@ -1,0 +1,14 @@
+#!/bin/sh
+DEFAULT_TIMEOUT="5";
+main () {
+	local minutes;
+	if [ "$#" != 1 ]; then
+		minutes="$DEFAULT_TIMEOUT";
+	else 
+		minutes="$1"
+	fi
+	sudo shutdown -P "$minutes"
+}
+set -e -u
+#set -x
+main "$@";

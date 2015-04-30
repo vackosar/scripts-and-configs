@@ -202,8 +202,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     awful.key({ "Mod1",           }, "Tab",
         function ()
-            -- awful.client.focus.history.previous()
-            awful.client.focus.byidx(-1)
+            awful.client.focus.history.previous()
+            -- awful.client.focus.byidx(-1)
             if client.focus then
                 client.focus:raise()
             end
@@ -211,8 +211,8 @@ globalkeys = awful.util.table.join(
     
     awful.key({ "Mod1", "Shift"   }, "Tab",
         function ()
-            -- awful.client.focus.history.previous()
-            awful.client.focus.byidx(1)
+            awful.client.focus.history.previous()
+            -- awful.client.focus.byidx(1)
             if client.focus then
                 client.focus:raise()
             end
@@ -394,10 +394,12 @@ client.add_signal("focus", function(c) c.border_color = beautiful.border_focus e
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.util.spawn_with_shell("skype")
+--awful.util.spawn_with_shell("skype")
 awful.util.spawn_with_shell("anki")
 awful.util.spawn_with_shell("lxterminal")
 --awful.util.spawn_with_shell("urxvt -e screen")
 awful.util.spawn_with_shell("dropbox start -i") 
-awful.util.spawn_with_shell("firefox") 
+--awful.util.spawn_with_shell("firefox") 
+awful.util.spawn_with_shell("chromium-browser") 
+
 --awful.util.spawn_with_shell("twinkle") 
