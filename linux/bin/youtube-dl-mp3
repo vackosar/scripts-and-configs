@@ -1,2 +1,2 @@
 #!/bin/sh
-youtube-dl --audio-format mp3 -f worst --extract-audio "$1";
+youtube-dl --audio-format mp3 -f worst --extract-audio --audio-quality 9 "$1";
