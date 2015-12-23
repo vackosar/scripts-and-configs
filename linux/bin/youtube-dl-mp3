@@ -1,0 +1,2 @@
+#!/bin/sh
+youtube-dl --audio-format mp3 -f worst --extract-audio "$1";
