@@ -1,0 +1,5 @@
+#!/bin/sh -ue
+files="$(git ls-files "**/*$@*")";
+lines="$(echo "$files" |wc -l)";
+echo "$files";
+test "$lines" = 1 && test -n "$files" && vi "$files";

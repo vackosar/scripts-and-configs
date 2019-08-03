@@ -1,0 +1,12 @@
+#!/bin/sh
+bk="$PWD"
+dir=$(mktemp -d)
+cd $dir
+youtube-dl --extract-audio --playlist-start=1 -A "$@"
+for file in echo *.m4a
+do
+	avconv -i "$file" "$bk/$file.ogg"
+	rm "$file"
+done
+cd "$bk"
+rmdir "$dir"
